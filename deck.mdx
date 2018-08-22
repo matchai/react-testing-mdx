@@ -10,10 +10,16 @@ import { selectors } from './components/selectors'
 import { selectorPreference } from './components/selectorPreference'
 import { within } from './components/within'
 import { getByTestId } from './components/getByTestId'
+import { jestdom } from './components/jestdom'
+import { Split } from 'mdx-deck/layouts'
 
 export {default as theme} from './theme'
 
 # React Integration Testing
+
+```notes
+- A recent addition to our toolset and open to feedback or suggestions
+```
 
 ---
 
@@ -25,26 +31,39 @@ Simple and complete React DOM testing utilities that encourage good testing prac
 
 ---
 
-## react-testing-library 
+## react-testing-library 🐐
 
-- a replacement for Enzyme
+- an alternative to Enzyme
 - provides light utility functions on top of `react-dom`
-- encourages better testing practices that mimic the way the websites are used
-- directly triggers DOM events and rerenders on jsdom
+- opinionated and small API to promote better testing practices
+- accurately mimics browser events by directly triggers DOM events and rerenders on jsdom
 
 ---
 
-### The more your tests resemble the way your software is used the more confidence they can give you​
+# The more your tests resemble the way your software is used, the more confidence they can give you.
+
+```notes
+- This is the primary guiding principle of the library
+```
 
 ---
 
-<CodeBlock style={{lineHeight: 1.5}} >
+<CodeBlock style={{fontSize: 30}} >
   {example}
 </CodeBlock>
 
+```notes
+- A quick moment to read through an example test
+- We'll walk through it after this slide
+```
+
 ---
 
-<CodeBlock style={{display: 'flex', justifyContent: 'center', lineHeight: 1.5, fontSize: 30}}>
+<CodeBlock style={{position: 'absolute', top: 15, right: 15, fontSize: 17, opacity: 0.8, border: 'solid 2px #ffffff80', borderRadius: 3}} >
+  {example}
+</CodeBlock>
+
+<CodeBlock style={{display: 'flex', justifyContent: 'center', lineHeight: 1.5}}>
   {`
 const {
     getByLabelText,
@@ -54,16 +73,20 @@ const {
   `.trim()}
 </CodeBlock>
 
-The `render` function renders a component with `ReactDOM`, returning a number of utility functions provided by `dom-testing-library`
+The `render` function renders a component with `react-dom` and returns a number of utility functions
 
 ---
 
-<CodeBlock style={{display: 'flex', justifyContent: 'center', lineHeight: 1.5, fontSize: 30}}>
+<CodeBlock style={{position: 'absolute', top: 15, right: 15, fontSize: 17, opacity: 0.8, border: 'solid 2px #ffffff80', borderRadius: 3}} >
+  {example}
+</CodeBlock>
+
+<CodeBlock style={{display: 'flex', justifyContent: 'center', fontSize: 30}}>
   {`
 getByLabelText('name').value = 'Mary
   `.trim()}
 </CodeBlock>
-<CodeBlock style={{display: 'flex', justifyContent: 'center', lineHeight: 1.5, fontSize: 30, opacity: 0.7}}>
+<CodeBlock style={{display: 'flex', justifyContent: 'center', fontSize: 30, opacity: 0.7}}>
   {`
 <label for="username-input">name</label>
 <input id="username-input" />
@@ -78,7 +101,11 @@ getByLabelText('name').value = 'Mary
 
 ---
 
-<CodeBlock style={{display: 'flex', justifyContent: 'center', lineHeight: 1.5, fontSize: 30}}>
+<CodeBlock style={{position: 'absolute', top: 15, right: 15, fontSize: 17, opacity: 0.8, border: 'solid 2px #ffffff80', borderRadius: 3}} >
+  {example}
+</CodeBlock>
+
+<CodeBlock style={{display: 'flex', justifyContent: 'center', fontSize: 30}}>
   {`
 fireEvent.click(getByText('Load Greeting'))
   `.trim()}
@@ -92,7 +119,11 @@ fireEvent.click(getByText('Load Greeting'))
 
 ---
 
-<CodeBlock style={{display: 'flex', justifyContent: 'center', lineHeight: 1.5, fontSize: 30}}>
+<CodeBlock style={{position: 'absolute', top: 15, right: 15, fontSize: 17, opacity: 0.8, border: 'solid 2px #ffffff80', borderRadius: 3}} >
+  {example}
+</CodeBlock>
+
+<CodeBlock style={{display: 'flex', justifyContent: 'center', fontSize: 30}}>
   {`
 await wait(() => getByTestId('greeting-text'))
   `.trim()}
@@ -102,7 +133,11 @@ await wait(() => getByTestId('greeting-text'))
 
 ---
 
-<CodeBlock style={{display: 'flex', justifyContent: 'center', lineHeight: 1.5, fontSize: 30}}>
+<CodeBlock style={{position: 'absolute', top: 15, right: 15, fontSize: 17, opacity: 0.8, border: 'solid 2px #ffffff80', borderRadius: 3}} >
+  {example}
+</CodeBlock>
+
+<CodeBlock style={{display: 'flex', justifyContent: 'center', fontSize: 30, marginTop: 150}}>
   {`
 expect(getByTestId('greeting-text')).toHaveTextContent('Hello Mary')
   `.trim()}
@@ -113,7 +148,8 @@ expect(getByTestId('greeting-text')).toHaveTextContent('Hello Mary')
 ---
 
 ### Selectors in react-testing-library
-<CodeBlock style={{display: 'flex', justifyContent: 'center', lineHeight: 1.5, fontSize: 25}}>
+
+<CodeBlock style={{display: 'flex', justifyContent: 'center', fontSize: 25}}>
   {selectors}
 </CodeBlock>
 
@@ -121,11 +157,14 @@ expect(getByTestId('greeting-text')).toHaveTextContent('Hello Mary')
 - The aim is to avoid tightly coupling implementation details with our integration tests
 - Classes are primarily used for styling
 - This allows refactors to not require our tests to change
+  - For example: if an element that was previously a clickable div was replaced with a button
+  - If classes used for styling was changed
 ```
 
 ---
 
 ### In order of preference
+
 <CodeBlock style={{display: 'flex', justifyContent: 'center', fontSize: 25}}>
   {selectorPreference}
 </CodeBlock>
@@ -139,6 +178,7 @@ expect(getByTestId('greeting-text')).toHaveTextContent('Hello Mary')
 </CodeBlock>
 
 Should only be used in situations where no other selector works for your use case
+- purely visual elements (ex. loading spinner)
 - large sections of the webpage
 - repeated elements (grid or list)
 
@@ -149,3 +189,17 @@ Should only be used in situations where no other selector works for your use cas
 </CodeBlock>
 
 Use the `within()` method to specify which section of the webpage an element should be found in
+
+---
+
+# Another example 🌺
+
+---
+
+<CodeBlock options={{readOnly: false}} style={{display: 'flex', justifyContent: 'center', fontSize: 25}}>
+    /* Insert example here! */
+</CodeBlock>
+
+---
+
+# Questions? ✨

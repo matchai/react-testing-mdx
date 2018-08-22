@@ -4,7 +4,7 @@ import { UnControlled as CodeMirror } from 'react-codemirror2';
 export const CodeBlock = ({
   children, options = {}, style, ...props
 }) => (
-  <div style={{ fontSize: 18, overflow: 'scroll', ...style }}>
+  <div style={{overflow: 'hidden', lineHeight: 1.5, ...style }}>
     <CodeMirror
       value={children}
       options={{
